@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared.CQRS\Shared.CQRS.csproj" />
+    <ProjectReference Include="..\Shared.Logging\Shared.Logging.csproj" />
   </ItemGroup>
 
 </Project>

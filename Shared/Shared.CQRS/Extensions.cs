@@ -7,7 +7,7 @@ namespace Shared.CQRS
 {
     public static class Extensions
     {
-        public static IServiceCollection AddCommands(this IServiceCollection services)
+        private static IServiceCollection AddCommands(this IServiceCollection services)
         {
             services.AddSingleton<ICommandDispatcher, CommandDispatcher>();
             services.Scan(s =>
