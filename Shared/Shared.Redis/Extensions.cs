@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Threading.Tasks.Dataflow;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
@@ -13,6 +14,7 @@ namespace Shared.Redis
             var options = new RedisOptions();
             section.Bind(options);
             services.Configure<RedisOptions>(section);
+            services.AddSingleton(options);
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(options.ConnectionString));
 
             return services;
