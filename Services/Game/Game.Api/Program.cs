@@ -1,5 +1,5 @@
 using Game.Application.Commands;
-using Game.Contracts.Requests;
+using Game.Application.Commands.Response;
 using Game.Infrastructure;
 using Shared.Community.Web;
 using Shared.CQRS.Command;
@@ -22,14 +22,9 @@ var app = builder.Build();
 app.UseWebCommon(configuration);
 
 app.MapGet("/ping", () => "pong");
-app.MapPost("/match",async (MatchMakeRequest request, ICommandDispatcher dispatcher, CancellationToken cancellationToken) =>
+app.MapPost("/match",async (MatchmakeCommand command, ICommandDispatcher dispatcher, CancellationToken cancellationToken) =>
 {
-    var matchMakeCommand = new MatchmakeCommand()
-    {
-        PlayerId = request.PlayerId,
-        Elo = request.Elo
-    };
-    var response = await dispatcher.SendAsync(matchMakeCommand, cancellationToken);
+    var response = await dispatcher.SendAsync(command, cancellationToken);
     if (response is null)
         return Results.NotFound();
     return Results.Ok(response);

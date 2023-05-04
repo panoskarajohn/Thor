@@ -23,7 +23,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Shared.Community.Web\Shared.Community.Web.csproj" />
       <ProjectReference Include="..\Game.Application\Game.Application.csproj" />
-      <ProjectReference Include="..\Game.Contracts\Game.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

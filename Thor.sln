@@ -39,8 +39,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thor.Automation", "Tests\Th
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Contracts", "Tests\Tests.Contracts\Tests.Contracts.csproj", "{05007EBB-8A84-4863-9046-347AAF954ADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game.Contracts", "Services\Game\Game.Contracts\Game.Contracts.csproj", "{8A6785BA-674C-4000-B3E0-4E0B4333C52F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,10 +105,6 @@ Global
 		{05007EBB-8A84-4863-9046-347AAF954ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05007EBB-8A84-4863-9046-347AAF954ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05007EBB-8A84-4863-9046-347AAF954ADB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A6785BA-674C-4000-B3E0-4E0B4333C52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A6785BA-674C-4000-B3E0-4E0B4333C52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A6785BA-674C-4000-B3E0-4E0B4333C52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A6785BA-674C-4000-B3E0-4E0B4333C52F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,7 +124,6 @@ Global
 		{23523F46-51F9-4302-9CD6-CA52D60BA42B} = {008F0948-CECF-45AA-B50E-042836C96592}
 		{41CD0568-62A4-42C6-BD2F-01A253BCFCDE} = {B7BA6D2B-882C-4AAA-9ABC-B3ADC982AF13}
 		{05007EBB-8A84-4863-9046-347AAF954ADB} = {B7BA6D2B-882C-4AAA-9ABC-B3ADC982AF13}
-		{8A6785BA-674C-4000-B3E0-4E0B4333C52F} = {008F0948-CECF-45AA-B50E-042836C96592}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B39DCACA-5806-4465-B3AE-E01D32F0DC49}

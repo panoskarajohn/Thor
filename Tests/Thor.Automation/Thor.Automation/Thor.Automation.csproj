@@ -29,7 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Services\Game\Game.Contracts\Game.Contracts.csproj" />
     <ProjectReference Include="..\..\Tests.Contracts\Tests.Contracts.csproj" />
   </ItemGroup>
 
