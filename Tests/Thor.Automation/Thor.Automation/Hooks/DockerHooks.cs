@@ -4,6 +4,7 @@ using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
 using Microsoft.Extensions.Configuration;
 using Tests.Contracts;
+using Thor.Automation.Services;
 
 namespace Thor.Automation.Hooks;
 
@@ -19,7 +20,12 @@ public class DockerHooks
     }
 
     [BeforeScenario()]
-    public void AddHttpClient()
+    public void AddHttpClients()
+    {
+        RegisterMatchClient();
+    }
+    
+    private void RegisterMatchClient()
     {
         var config = LoadConfiguration();
         var confirmationUrl = config[Endpoints.GameApiAddress];
@@ -27,7 +33,9 @@ public class DockerHooks
         {
             BaseAddress = new Uri(confirmationUrl),
         };
-        _container.RegisterInstanceAs(httpClient);
+
+        var repository = new MatchMakeRepository(httpClient);
+        _container.RegisterInstanceAs<IMatchMakeRepository>(repository);
     }
 
     [BeforeTestRun]

@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using Tests.Contracts;
 using Thor.Automation.Helpers;
+using Thor.Automation.Services;
 
 namespace Thor.Automation.StepDefinitions.MatchMakeSteps;
 
@@ -9,13 +10,13 @@ namespace Thor.Automation.StepDefinitions.MatchMakeSteps;
 public class MatchMakeStepDefinitions
 {
     private static Player _player = null;
-    private static HttpStatusCode _statusCode;
+    private static HttpResponseMessage _responseMessage;
     
-    private readonly HttpClient _httpClient;
+    private readonly IMatchMakeRepository _repository;
     
-    public MatchMakeStepDefinitions(HttpClient httpClient)
+    public MatchMakeStepDefinitions(IMatchMakeRepository repository)
     {
-        _httpClient = httpClient;
+        _repository = repository;
     }
     
     [Given(@"a player")]
@@ -26,22 +27,16 @@ public class MatchMakeStepDefinitions
 
 
     [When(@"the player searches for a match on the queue")]
-    public void WhenThePlayerSearchesForAMatch()
+    public async Task WhenThePlayerSearchesForAMatch()
     {
         var player = _player;
-        var request = new MatchMakeRequest
-        {
-            PlayerId = player.Id,
-            Elo = player.Elo
-        };
-
-        var response = _httpClient.PostAsJsonAsync("/match", request).Result;
-        _statusCode = response.StatusCode;
+        var response = await _repository.MatchMake(player);
+        _responseMessage = response;
     }
     
     [Then(@"the player should receive a (.*) status code")]
     public void ThenThePlayerShouldReceiveAStatusCode(int statusCode)
     {
-        ((int) _statusCode).Should().Be(statusCode);
+        ((int) _responseMessage.StatusCode).Should().Be(statusCode);
     }
 }
