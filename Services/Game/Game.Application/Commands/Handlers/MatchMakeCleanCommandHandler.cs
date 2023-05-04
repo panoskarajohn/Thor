@@ -7,9 +7,9 @@ namespace Game.Application.Commands.Handlers;
 public class MatchMakeCleanCommandHandler : ICommandHandler<MatchMakeCleanCommand, bool>
 {
     private readonly IMatchMaker _matchMaker;
-    private readonly ILogger<MatchMakeCommandHandler> _logger;
+    private readonly ILogger<MatchMakeCleanCommandHandler> _logger;
 
-    public MatchMakeCleanCommandHandler(IMatchMaker matchMaker, ILogger<MatchMakeCommandHandler> logger)
+    public MatchMakeCleanCommandHandler(IMatchMaker matchMaker, ILogger<MatchMakeCleanCommandHandler> logger)
     {
         _matchMaker = matchMaker;
         _logger = logger;
