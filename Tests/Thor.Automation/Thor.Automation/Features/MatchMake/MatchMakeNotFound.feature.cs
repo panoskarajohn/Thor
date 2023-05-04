@@ -135,12 +135,25 @@ this.FeatureBackground();
         [NUnit.Framework.DescriptionAttribute("Match found")]
         [NUnit.Framework.CategoryAttribute("matchMake")]
         [NUnit.Framework.CategoryAttribute("found")]
-        public virtual void MatchFound()
+        [NUnit.Framework.TestCaseAttribute("1200", "1300", null)]
+        [NUnit.Framework.TestCaseAttribute("1200", "1200", null)]
+        [NUnit.Framework.TestCaseAttribute("1200", "1100", null)]
+        [NUnit.Framework.TestCaseAttribute("1500", "1500", null)]
+        [NUnit.Framework.TestCaseAttribute("1500", "1600", null)]
+        [NUnit.Framework.TestCaseAttribute("1000", "1100", null)]
+        public virtual void MatchFound(string player1, string player2, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "matchMake",
                     "found"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("player1", player1);
+            argumentsOfScenario.Add("player2", player2);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Match found", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
@@ -166,7 +179,7 @@ this.ScenarioInitialize(scenarioInfo);
 this.FeatureBackground();
 #line hidden
 #line 14
- testRunner.Given("a player with elo 1200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("a player with elo {0}", player1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
  testRunner.When("the player searches for a match on the queue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -175,7 +188,7 @@ this.FeatureBackground();
  testRunner.Then("the player should receive a 404 status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 17
- testRunner.Given("a player with elo 1200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given(string.Format("a player with elo {0}", player2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 18
  testRunner.When("the player searches for a match on the queue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -191,17 +204,30 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Match not found for elo higher than 200")]
+        [NUnit.Framework.DescriptionAttribute("Match not found for elo in the range higher/lower (-200, +200)")]
         [NUnit.Framework.CategoryAttribute("matchMake")]
         [NUnit.Framework.CategoryAttribute("notfound")]
-        public virtual void MatchNotFoundForEloHigherThan200()
+        [NUnit.Framework.TestCaseAttribute("1200", "1401", null)]
+        [NUnit.Framework.TestCaseAttribute("1300", "1501", null)]
+        [NUnit.Framework.TestCaseAttribute("1400", "1601", null)]
+        [NUnit.Framework.TestCaseAttribute("1300", "1800", null)]
+        [NUnit.Framework.TestCaseAttribute("1500", "1299", null)]
+        [NUnit.Framework.TestCaseAttribute("1500", "2500", null)]
+        public virtual void MatchNotFoundForEloInTheRangeHigherLower_200200(string player1, string player2, string[] exampleTags)
         {
-            string[] tagsOfScenario = new string[] {
+            string[] @__tags = new string[] {
                     "matchMake",
                     "notfound"};
+            if ((exampleTags != null))
+            {
+                @__tags = System.Linq.Enumerable.ToArray(System.Linq.Enumerable.Concat(@__tags, exampleTags));
+            }
+            string[] tagsOfScenario = @__tags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Match not found for elo higher than 200", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
-#line 23
+            argumentsOfScenario.Add("player1", player1);
+            argumentsOfScenario.Add("player2", player2);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Match not found for elo in the range higher/lower (-200, +200)", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 32
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -224,25 +250,25 @@ this.ScenarioInitialize(scenarioInfo);
 #line 3
 this.FeatureBackground();
 #line hidden
-#line 24
- testRunner.Given("a player with elo 1200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 33
+ testRunner.Given(string.Format("a player with elo {0}", player1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 25
+#line 34
  testRunner.When("the player searches for a match on the queue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 26
+#line 35
  testRunner.Then("the player should receive a 404 status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 27
- testRunner.Given("a player with elo 1500", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 36
+ testRunner.Given(string.Format("a player with elo {0}", player2), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 28
+#line 37
  testRunner.When("the player searches for a match on the queue", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 29
+#line 38
  testRunner.Then("the player should receive a 404 status code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 30
+#line 39
  testRunner.And("queue should not be empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }

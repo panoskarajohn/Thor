@@ -26,7 +26,7 @@ internal class MatchMaker : IMatchMaker
 
     public async Task<PlayerDto?> FindMatchAsync(PlayerDto player, CancellationToken cancellationToken = default)
     {
-        var eloRange = new RedisValue[] { player.Elo - 150, player.Elo + 200 };
+        var eloRange = new RedisValue[] { player.Elo - 200, player.Elo + 200 };
         
         var opponents = await _database.SortedSetRangeByScoreAsync(MatchMakingKeys.MatchmakingQueue, start: (double)eloRange[0], stop: (double)eloRange[1], take: 1);
         
@@ -48,7 +48,7 @@ internal class MatchMaker : IMatchMaker
         }
         
         await _database.SortedSetRemoveAsync(MatchMakingKeys.MatchmakingQueue, opponents.First());
-        _logger.LogInformation("Found opponent {opponentId} for player {playerId}", opponent.Id, player.Id);
+        _logger.LogInformation("Found opponent {opponentId}:{opponentElo} for player {playerId}:{playerElo}", opponent.Id, opponent.Elo, player.Id, player.Elo);
         return opponent;
     }
 
