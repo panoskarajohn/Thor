@@ -17,12 +17,6 @@ services:
       - 6379:6379
     networks:
       - thor
-    volumes:
-      - redis:/data
-
-volumes:
-  redis:
-    driver: local
 
 networks:
   thor:

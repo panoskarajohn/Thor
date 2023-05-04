@@ -51,5 +51,14 @@ internal class MatchMaker : IMatchMaker
         _logger.LogInformation("Found opponent {opponentId} for player {playerId}", opponent.Id, player.Id);
         return opponent;
     }
-    
+
+    public Task<long> GetQueueLength()
+    {
+        return _database.SortedSetLengthAsync(MatchMakingKeys.MatchmakingQueue);
+    }
+
+    public Task<bool> CleanQueue()
+    {
+        return _database.KeyDeleteAsync(MatchMakingKeys.MatchmakingQueue);
+    }
 }

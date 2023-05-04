@@ -19,10 +19,16 @@ public class MatchMakeStepDefinitions
         _repository = repository;
     }
     
-    [Given(@"a player")]
-    public void GivenAPlayer()
+    [Given(@"a clean queue")]
+    public async Task GivenACleanQueue()
     {
-        _player = Helper.Create1200Player();
+        await _repository.CleanQueue();
+    }
+    
+    [Given(@"a player with elo (.*)")]
+    public void GivenAPlayer(int elo)
+    {
+        _player = Helper.CreatePlayer(elo);
     }
 
 
@@ -38,5 +44,19 @@ public class MatchMakeStepDefinitions
     public void ThenThePlayerShouldReceiveAStatusCode(int statusCode)
     {
         ((int) _responseMessage.StatusCode).Should().Be(statusCode);
+    }
+
+    [Then(@"queue should be empty")]
+    public async Task ThenQueueShouldBeEmpty()
+    {
+        var queueLength = await _repository.GetQueueLength();
+        queueLength.Should().Be(0);
+    }
+    
+    [Then(@"queue should not be empty")]
+    public async Task ThenQueueShouldNotBeEmpty()
+    {
+        var queueLength = await _repository.GetQueueLength();
+        queueLength.Should().NotBe(0);
     }
 }

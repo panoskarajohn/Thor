@@ -22,7 +22,19 @@ public class MatchMakeRepository : IMatchMakeRepository
             Elo = player.Elo
         };
 
-        var response = _httpClient.PostAsJsonAsync("/match", request);
-        return response;
+        return _httpClient.PostAsJsonAsync("/match", request);
+    }
+    
+    public async Task<long> GetQueueLength()
+    {
+        var response = await _httpClient.GetAsync("/match/queue");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.Content.ReadFromJsonAsync<long>();
+    }
+    
+    public async Task<bool> CleanQueue()
+    {
+        var response = await _httpClient.DeleteAsync("/match/queue/clean");
+        return response.StatusCode == HttpStatusCode.OK;
     }
 }
