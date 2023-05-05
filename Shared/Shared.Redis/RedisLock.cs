@@ -18,7 +18,7 @@ public class RedisLock : IDisposable
         _lockValue = lockValue;
         if (!_database.StringSet(_lockKey, _lockValue, expirationTime, When.NotExists))
         {
-            throw new LockException($"Failed to acquire lock '{_lockKey}'");
+            throw new LockException();
         }
     }
     

@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Shared.Exception;
 using Shared.Extensions;
 using Shared.Web.Context;
 using Shared.Web.HttpExtensions;
+using Shared.Web.Middleware;
 using Shared.Web.Options;
 
 namespace Shared.Web
@@ -22,9 +24,15 @@ namespace Shared.Web
             services.AddSingleton<ContextAccessor>();
             services.AddTransient(sp => sp.GetRequiredService<ContextAccessor>().Context);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddErrorHandling();
 
             return services;
         }
+        
+        public static IServiceCollection AddErrorHandling(this IServiceCollection services)
+            => services
+                .AddScoped<ErrorHandlingMiddleware>()
+                .AddExceptionMapping();
         
         public static IServiceCollection AddWeb(this IServiceCollection services, IConfiguration configuration)
         {
@@ -49,8 +57,12 @@ namespace Shared.Web
         {
             app.UseContext();
             app.UseCorrelationId();
+            app.UseErrorHandling();
             return app;
         }
+        
+        static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
+            => app.UseMiddleware<ErrorHandlingMiddleware>();
         
         /// <summary>
         /// 

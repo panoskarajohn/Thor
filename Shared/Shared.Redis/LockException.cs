@@ -1,6 +1,10 @@
-﻿namespace Shared.Redis;
+﻿using Shared.Types;
 
-public class LockException : Exception
+namespace Shared.Redis;
+
+public class LockException : ThorException
 {
-    public LockException(string message) : base(message) { }
+    public LockException() : base($"Player already in queue. Please wait for a match.")
+    {
+    }
 }

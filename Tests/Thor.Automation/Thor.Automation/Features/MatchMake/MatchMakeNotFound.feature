@@ -28,6 +28,13 @@ Examples:
   | 1300    | 1800    |
   | 1500    | 1299    |
   | 1500    | 2500    |
+ 
+@notfound @error
+Scenario: Player already on queue with lock. second request should fail
+	Given a player with elo 1000
+	When the player searches for a match on the queue
+	And the player searches for a match on the queue
+	Then the player should receive a 400 status code
 
 @found
 Scenario: Match found

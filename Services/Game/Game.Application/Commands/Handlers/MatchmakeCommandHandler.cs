@@ -24,10 +24,10 @@ public class MatchMakeCommandHandler : ICommandHandler<MatchmakeCommand, Matchma
         _matchMaker = matchMaker;
         _lock = @lock;
         _retryPolicy = Policy
-            .Handle<Exception>()//TODO: add specific exception to avoid retrying on circuit breaker
+            .Handle<RedisException>()
             .WaitAndRetryAsync(3, retryAttempt => {
                     _logger.LogWarning("Retrying to find match for player attempt {retryAttempt}", retryAttempt);
-                    var timeToWait = TimeSpan.FromSeconds(Math.Pow(2, retryAttempt));
+                    var timeToWait = TimeSpan.FromMilliseconds(100);
                     return timeToWait;
                 }
             );
@@ -36,11 +36,15 @@ public class MatchMakeCommandHandler : ICommandHandler<MatchmakeCommand, Matchma
     public async Task<MatchmakeResponse> HandleAsync(MatchmakeCommand command, CancellationToken cancellationToken = default)
     {
         var playerDto = new PlayerDto(command.PlayerId, command.Elo);
-        using var playerLock = _lock.AcquireLock(playerDto.Id);
+        var playerLock = _lock.AcquireLock(playerDto.Id);
+        
         _logger.LogInformation("Finding match for player {playerId}", playerDto.Id);
         var opponent = await _retryPolicy.ExecuteAsync(async () => await _matchMaker.FindMatchAsync(playerDto, cancellationToken));
-        if (opponent is null) 
+        
+        if (opponent is null)
             return null;
+        
+        playerLock.Dispose();
         return new MatchmakeResponse() {PlayerMatchedId = opponent.Id, PlayerMatchedElo = opponent.Elo, MatchId = Guid.NewGuid().ToString()};
     }
 }
