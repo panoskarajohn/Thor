@@ -43,6 +43,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Types", "Shared\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Exception", "Shared\Shared.Exception\Shared.Exception.csproj", "{D4DBB312-02F9-4F34-A26C-D2AE880BFE58}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadTest", "LoadTest", "{6B0F8814-2039-434D-BBD3-6833EC99989A}"
+	ProjectSection(SolutionItems) = preProject
+		LoadTest\loadTest.js = LoadTest\loadTest.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

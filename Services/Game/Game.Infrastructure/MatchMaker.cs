@@ -43,7 +43,6 @@ internal class MatchMaker : IMatchMaker
         if (player == opponent)
         {
             _logger.LogWarning("Player {playerId} is already in the queue and matched with himself", player.Id);
-            await _database.SortedSetRemoveAsync(MatchMakingKeys.MatchmakingQueue, opponents.First());
             throw new Exception("Player is already in the queue");
         }
         

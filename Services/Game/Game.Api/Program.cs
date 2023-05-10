@@ -22,8 +22,10 @@ services.AddRedis(configuration);
 var app = builder.Build();
 
 app.UseWebCommon(configuration);
+app.UseHealthChecks("/healthcheck");
 
 app.MapGet("/ping", () => "pong");
+
 app.MapPost("/match",async (MatchmakeCommand command, ICommandDispatcher dispatcher, CancellationToken cancellationToken) =>
 {
     var response = await dispatcher.SendAsync(command, cancellationToken);

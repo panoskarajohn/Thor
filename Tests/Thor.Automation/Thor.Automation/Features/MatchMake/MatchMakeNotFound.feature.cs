@@ -201,16 +201,16 @@ this.FeatureBackground();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Player fails to acquire a second lock")]
+        [NUnit.Framework.DescriptionAttribute("Player already on queue with lock. second request should fail")]
         [NUnit.Framework.CategoryAttribute("notfound")]
         [NUnit.Framework.CategoryAttribute("error")]
-        public virtual void PlayerFailsToAcquireASecondLock()
+        public virtual void PlayerAlreadyOnQueueWithLock_SecondRequestShouldFail()
         {
             string[] tagsOfScenario = new string[] {
                     "notfound",
                     "error"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Player fails to acquire a second lock", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Player already on queue with lock. second request should fail", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
