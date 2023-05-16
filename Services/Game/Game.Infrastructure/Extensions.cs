@@ -6,8 +6,8 @@ public static class Extensions
 {
     public static IServiceCollection AddGameInfrastructure(this IServiceCollection services)
     {
-        services.AddTransient<IMatchMaker, MatchMaker>();
-        services.AddSingleton<ILock, Lock>();
+        services.AddScoped<IMatchMaker, MatchMaker>();
+        services.AddScoped<ILock, Lock>();
         return services;
     }
 }

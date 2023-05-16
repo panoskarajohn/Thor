@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Shared\Shared.Community.Web\Shared.Community.Web.csproj" />
+      <ProjectReference Include="..\..\..\Shared\Shared.Redis.RateLimiter\Shared.Redis.RateLimiter.csproj" />
       <ProjectReference Include="..\Game.Application\Game.Application.csproj" />
     </ItemGroup>
 

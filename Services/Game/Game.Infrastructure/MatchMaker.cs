@@ -1,7 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
 using Game.Infrastructure.RedisDto;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Shared.Redis;
 using StackExchange.Redis;
 
@@ -34,13 +33,13 @@ internal class MatchMaker : IMatchMaker
         {
             _logger.LogInformation("No opponents found for player {playerId}", player.Id);
             await _database.SortedSetAddAsync(MatchMakingKeys.MatchmakingQueue,
-                JsonConvert.SerializeObject(player), 
+                JsonSerializer.Serialize(player), 
                 player.Elo);
             return null;
         }
         
-        var opponent = JsonConvert.DeserializeObject<PlayerDto>(opponents.First()!);
-        if (player == opponent)
+        var opponent = JsonSerializer.Deserialize<PlayerDto>(opponents.First()!);
+        if (player.Equals(opponent))
         {
             _logger.LogWarning("Player {playerId} is already in the queue and matched with himself", player.Id);
             throw new Exception("Player is already in the queue");
@@ -51,11 +50,19 @@ internal class MatchMaker : IMatchMaker
         return opponent;
     }
 
+    /// <summary>
+    /// Gets the queue length
+    /// </summary>
+    /// <returns></returns>
     public Task<long> GetQueueLength()
     {
         return _database.SortedSetLengthAsync(MatchMakingKeys.MatchmakingQueue);
     }
 
+    /// <summary>
+    /// Cleans the queue from all players
+    /// </summary>
+    /// <returns></returns>
     public Task<bool> CleanQueue()
     {
         return _database.KeyDeleteAsync(MatchMakingKeys.MatchmakingQueue);
