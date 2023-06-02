@@ -44,13 +44,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Exception", "Shared\Shared.Exception\Shared.Exception.csproj", "{D4DBB312-02F9-4F34-A26C-D2AE880BFE58}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadTest", "LoadTest", "{6B0F8814-2039-434D-BBD3-6833EC99989A}"
-	ProjectSection(SolutionItems) = preProject
-		LoadTest\loadTest.js = LoadTest\loadTest.js
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Redis.RateLimiter", "Shared\Shared.Redis.RateLimiter\Shared.Redis.RateLimiter.csproj", "{514746D1-B2AF-459D-BB30-64AF7BDFD31F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gane", "Gane", "{BCD02077-CF25-4640-8BDE-730000CB6873}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{49612ED4-1126-4450-9E3E-0F522C829B53}"
+	ProjectSection(SolutionItems) = preProject
+		LoadTest\loadTest.js = LoadTest\loadTest.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,7 @@ Global
 		{D4DBB312-02F9-4F34-A26C-D2AE880BFE58} = {FC25BA78-9B02-4B1D-AA65-C0EE93F528DF}
 		{514746D1-B2AF-459D-BB30-64AF7BDFD31F} = {FC25BA78-9B02-4B1D-AA65-C0EE93F528DF}
 		{BCD02077-CF25-4640-8BDE-730000CB6873} = {008F0948-CECF-45AA-B50E-042836C96592}
+		{49612ED4-1126-4450-9E3E-0F522C829B53} = {6B0F8814-2039-434D-BBD3-6833EC99989A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B39DCACA-5806-4465-B3AE-E01D32F0DC49}
