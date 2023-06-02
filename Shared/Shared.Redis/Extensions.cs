@@ -28,9 +28,7 @@ namespace Shared.Redis
                 return connection;
             });
             
-            services.AddHealthChecks().AddCheck<RedisHealthCheck>("RedisConnectionCheck");
-            
-
+            services.AddHealthChecks().AddRedis(options.ConnectionString);
             return services;
         }
         

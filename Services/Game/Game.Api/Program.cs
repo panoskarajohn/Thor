@@ -1,6 +1,8 @@
 using Game.Application.Commands;
 using Game.Application.Queries;
 using Game.Infrastructure;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Shared.Community.Web;
 using Shared.CQRS.Command;
 using Shared.CQRS.Query;
@@ -25,7 +27,11 @@ var app = builder.Build();
 app.UseWebCommon(configuration);
 app.UseRedisRateLimiter();
 
-app.UseHealthChecks("/healthcheck");
+app.UseHealthChecks("/healthcheck", new HealthCheckOptions()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
 var rateLimitAttribute = new RateLimitAttribute();
 app.MapGet("/ping", () => "pong")
     .WithMetadata(rateLimitAttribute);
