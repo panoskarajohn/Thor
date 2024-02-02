@@ -32,8 +32,7 @@ Examples:
 @notfound @error
 Scenario: Player already on queue with lock. second request should fail
 	Given a player with elo 1000
-	When the player searches for a match on the queue
-	And the player searches for a match on the queue
+	When the player sends two concurrent requests for a match on the queue
 	Then the player should receive a 400 status code
 
 @found

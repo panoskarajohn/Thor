@@ -40,6 +40,19 @@ public class MatchMakeStepDefinitions
         _responseMessage = response;
     }
     
+    [When(@"the player sends two concurrent requests for a match on the queue")]
+    public async Task WhenThePlayerSearchesForAMatchFromTwoInstances()
+    {
+        var player = _player;
+        var task1 = _repository.MatchMake(player);
+        var task2 = _repository.MatchMake(player);
+
+        await Task.WhenAll(task1, task2);
+        var result1 = await task1;
+        var result2 = await task2;
+        _responseMessage = result1.StatusCode == HttpStatusCode.BadRequest ? result1 : result2;
+    }
+    
     [Then(@"the player should receive a (.*) status code")]
     public void ThenThePlayerShouldReceiveAStatusCode(int statusCode)
     {

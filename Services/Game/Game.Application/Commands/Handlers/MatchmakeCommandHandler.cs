@@ -36,7 +36,7 @@ public class MatchMakeCommandHandler : ICommandHandler<MatchmakeCommand, Matchma
     public async Task<MatchmakeResponse> HandleAsync(MatchmakeCommand command, CancellationToken cancellationToken = default)
     {
         var playerDto = new PlayerDto(command.PlayerId, command.Elo);
-        var playerLock = _lock.AcquireLock(playerDto.Id);
+        using var redisLock = _lock.AcquireLock(playerDto.Id);
         
         _logger.LogInformation("Finding match for player {playerId}", playerDto.Id);
         
@@ -44,13 +44,23 @@ public class MatchMakeCommandHandler : ICommandHandler<MatchmakeCommand, Matchma
             .Handle<RedisException>()
             .FallbackAsync(default(PlayerDto?));
 
-        var opponent = await fallbackPolicy.WrapAsync(_retryPolicy).ExecuteAsync(async 
+        var opponent = await fallbackPolicy
+            .WrapAsync(_retryPolicy)
+            .ExecuteAsync(async 
             () => await _matchRepository.FindMatchAsync(playerDto, cancellationToken));
+
+        await QueuePlayerIfNoOpponentFound(playerDto, opponent);
         
-        playerLock.Dispose();
-        
-        if (opponent is null) 
-            return null;
-        return new MatchmakeResponse() {PlayerMatchedId = opponent.Id, PlayerMatchedElo = opponent.Elo, MatchId = Guid.NewGuid().ToString()};
+        return opponent is null ? null : new MatchmakeResponse() {PlayerMatchedId = opponent.Id, PlayerMatchedElo = opponent.Elo, MatchId = Guid.NewGuid().ToString()};
+    }
+
+    private async ValueTask<bool> QueuePlayerIfNoOpponentFound(PlayerDto playerDto, PlayerDto? opponent)
+    {
+        if (opponent is not null)
+        {
+            return false;
+        }
+
+        return await _matchRepository.AddPlayerToQueue(playerDto);
     }
 }

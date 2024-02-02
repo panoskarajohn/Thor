@@ -33,8 +33,7 @@ app.UseHealthChecks("/healthcheck", new HealthCheckOptions()
 });
 
 var rateLimitAttribute = new RateLimitAttribute();
-app.MapGet("/ping", () => "pong")
-    .WithMetadata(rateLimitAttribute);
+app.MapGet("/ping", () => "pong");
 
 app.MapPost("/match",async (MatchmakeCommand command, ICommandDispatcher dispatcher, CancellationToken cancellationToken) =>
 {
