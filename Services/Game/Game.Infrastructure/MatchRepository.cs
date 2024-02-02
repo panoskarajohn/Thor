@@ -45,6 +45,13 @@ internal class MatchRepository : IMatchRepository
         throw new RedisException("Player not found");
     }
 
+    public Task<bool> AddPlayerToQueue(PlayerDto player)
+    {
+        return _database.SortedSetAddAsync(MatchMakingKeys.MatchmakingQueue,
+            JsonSerializer.Serialize(player), 
+            player.Elo);
+    }
+
     /// <summary>
     /// 
     /// </summary>
