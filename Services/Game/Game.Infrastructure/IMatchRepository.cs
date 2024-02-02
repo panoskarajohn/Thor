@@ -2,7 +2,7 @@
 
 namespace Game.Infrastructure;
 
-public interface IMatchMaker
+public interface IMatchRepository
 {
     public Task<PlayerDto?> FindMatchAsync(PlayerDto player, CancellationToken cancellationToken = default);
     public Task<long> GetQueueLength();

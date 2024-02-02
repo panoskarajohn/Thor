@@ -55,6 +55,10 @@ app.MapDelete("/match/queue/clean", async (ICommandDispatcher dispatcher, Cancel
 {
     var command = new MatchMakeCleanCommand();
     var response = await dispatcher.SendAsync(command, cancellationToken);
+
+    if(!response)
+        return Results.StatusCode(500);
+
     return Results.NoContent();
 }).WithMetadata(rateLimitAttribute);
 

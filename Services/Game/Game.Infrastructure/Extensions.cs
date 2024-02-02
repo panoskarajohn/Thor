@@ -6,7 +6,7 @@ public static class Extensions
 {
     public static IServiceCollection AddGameInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<IMatchMaker, MatchMaker>();
+        services.AddScoped<IMatchRepository, MatchRepository>();
         services.AddScoped<ILock, Lock>();
         return services;
     }
