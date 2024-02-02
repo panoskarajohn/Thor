@@ -47,16 +47,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadTest", "LoadTest", "{6B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Redis.RateLimiter", "Shared\Shared.Redis.RateLimiter\Shared.Redis.RateLimiter.csproj", "{514746D1-B2AF-459D-BB30-64AF7BDFD31F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gane", "Gane", "{BCD02077-CF25-4640-8BDE-730000CB6873}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{BCD02077-CF25-4640-8BDE-730000CB6873}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{49612ED4-1126-4450-9E3E-0F522C829B53}"
 	ProjectSection(SolutionItems) = preProject
 		LoadTest\loadTest.js = LoadTest\loadTest.js
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{C867AB46-F8EA-4840-8DFD-E2701386FB23}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity", "Services\Identity\Identity\Identity.csproj", "{AA621718-8BAF-4766-AF76-6D685C612BB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -136,10 +132,6 @@ Global
 		{514746D1-B2AF-459D-BB30-64AF7BDFD31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{514746D1-B2AF-459D-BB30-64AF7BDFD31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{514746D1-B2AF-459D-BB30-64AF7BDFD31F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA621718-8BAF-4766-AF76-6D685C612BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA621718-8BAF-4766-AF76-6D685C612BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA621718-8BAF-4766-AF76-6D685C612BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA621718-8BAF-4766-AF76-6D685C612BB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,8 +156,6 @@ Global
 		{514746D1-B2AF-459D-BB30-64AF7BDFD31F} = {FC25BA78-9B02-4B1D-AA65-C0EE93F528DF}
 		{BCD02077-CF25-4640-8BDE-730000CB6873} = {008F0948-CECF-45AA-B50E-042836C96592}
 		{49612ED4-1126-4450-9E3E-0F522C829B53} = {6B0F8814-2039-434D-BBD3-6833EC99989A}
-		{C867AB46-F8EA-4840-8DFD-E2701386FB23} = {008F0948-CECF-45AA-B50E-042836C96592}
-		{AA621718-8BAF-4766-AF76-6D685C612BB2} = {C867AB46-F8EA-4840-8DFD-E2701386FB23}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B39DCACA-5806-4465-B3AE-E01D32F0DC49}
