@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LoadTest", "LoadTest", "{6B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Redis.RateLimiter", "Shared\Shared.Redis.RateLimiter\Shared.Redis.RateLimiter.csproj", "{514746D1-B2AF-459D-BB30-64AF7BDFD31F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gane", "Gane", "{BCD02077-CF25-4640-8BDE-730000CB6873}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{BCD02077-CF25-4640-8BDE-730000CB6873}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{49612ED4-1126-4450-9E3E-0F522C829B53}"
 	ProjectSection(SolutionItems) = preProject

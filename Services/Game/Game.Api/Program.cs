@@ -33,8 +33,7 @@ app.UseHealthChecks("/healthcheck", new HealthCheckOptions()
 });
 
 var rateLimitAttribute = new RateLimitAttribute();
-app.MapGet("/ping", () => "pong")
-    .WithMetadata(rateLimitAttribute);
+app.MapGet("/ping", () => "pong");
 
 app.MapPost("/match",async (MatchmakeCommand command, ICommandDispatcher dispatcher, CancellationToken cancellationToken) =>
 {
@@ -42,20 +41,27 @@ app.MapPost("/match",async (MatchmakeCommand command, ICommandDispatcher dispatc
     if (response is null)
         return Results.NotFound();
     return Results.Ok(response);
-}).WithMetadata(rateLimitAttribute);
+})
+    .WithMetadata(rateLimitAttribute);
 
 app.MapGet("/match/queue", async (IQueryDispatcher dispatcher, CancellationToken cancellationToken) =>
 {
     var query = new QueueQuery();
     var response = await dispatcher.QueryAsync(query, cancellationToken);
     return Results.Ok(response.Count);
-}).WithMetadata(rateLimitAttribute);
+})
+    .WithMetadata(rateLimitAttribute);
 
 app.MapDelete("/match/queue/clean", async (ICommandDispatcher dispatcher, CancellationToken cancellationToken) =>
 {
     var command = new MatchMakeCleanCommand();
     var response = await dispatcher.SendAsync(command, cancellationToken);
+
+    if(!response)
+        return Results.StatusCode(500);
+
     return Results.NoContent();
-}).WithMetadata(rateLimitAttribute);
+})
+    .WithMetadata(rateLimitAttribute);
 
 app.Run();
