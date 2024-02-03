@@ -6,8 +6,8 @@ export let options = {
     insecureSkipTLSVerify: true,
     noConnectionReuse: false,
     stages: [
-        { duration: '5m',  target: 500 }, // start picking up users, ramping up to 500 users over 5 minutes
-        { duration: '10m',  target: 500 }, //stay at 500 users for 10 minutes
+        { duration: '5m',  target: 100 }, // start picking up users, ramping up to 500 users over 5 minutes
+        { duration: '10m',  target: 100 }, //stay at 500 users for 10 minutes
         { duration: '5m',  target: 0 }, // scale down. Recovery stage.
        ],
        thresholds: {

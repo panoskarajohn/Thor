@@ -15,8 +15,6 @@ internal class RateLimiter : IRateLimiter
         _database = _redis.GetDatabase();
     }
 
-    private const string RateLimitPrefix = "rate-limit";
-
     public async Task<bool> IsRequestAllowedAsync(string instance, string ipAddress, int maxRequests, TimeSpan? expire)
     {
         var key = RateLimiterKeys.RateLimiterKey(instance ,ipAddress);
