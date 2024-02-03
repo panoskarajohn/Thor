@@ -14,14 +14,14 @@ namespace Game.Application.Commands.Handlers;
 public class MatchMakeCommandHandler : ICommandHandler<MatchmakeCommand, MatchmakeResponse>
 {
     private readonly ILogger<MatchMakeCommandHandler> _logger;
-    private readonly IMatchMaker _matchMaker;
+    private readonly IMatchRepository _matchRepository;
     private readonly AsyncRetryPolicy _retryPolicy;
     private readonly ILock _lock;
     
-    public MatchMakeCommandHandler(ILogger<MatchMakeCommandHandler> logger, IMatchMaker matchMaker, ILock @lock)
+    public MatchMakeCommandHandler(ILogger<MatchMakeCommandHandler> logger, IMatchRepository matchRepository, ILock @lock)
     {
         _logger = logger;
-        _matchMaker = matchMaker;
+        _matchRepository = matchRepository;
         _lock = @lock;
         _retryPolicy = Policy
             .Handle<RedisException>()
@@ -36,15 +36,31 @@ public class MatchMakeCommandHandler : ICommandHandler<MatchmakeCommand, Matchma
     public async Task<MatchmakeResponse> HandleAsync(MatchmakeCommand command, CancellationToken cancellationToken = default)
     {
         var playerDto = new PlayerDto(command.PlayerId, command.Elo);
-        var playerLock = _lock.AcquireLock(playerDto.Id);
+        using var redisLock = _lock.AcquireLock(playerDto.Id);
         
         _logger.LogInformation("Finding match for player {playerId}", playerDto.Id);
-        var opponent = await _retryPolicy.ExecuteAsync(async () => await _matchMaker.FindMatchAsync(playerDto, cancellationToken));
         
-        if (opponent is null)
-            return null;
+        var fallbackPolicy = Policy<PlayerDto?>
+            .Handle<RedisException>()
+            .FallbackAsync(default(PlayerDto?));
+
+        var opponent = await fallbackPolicy
+            .WrapAsync(_retryPolicy)
+            .ExecuteAsync(async 
+            () => await _matchRepository.FindMatchAsync(playerDto, cancellationToken));
+
+        await QueuePlayerIfNoOpponentFound(playerDto, opponent);
         
-        playerLock.Dispose();
-        return new MatchmakeResponse() {PlayerMatchedId = opponent.Id, PlayerMatchedElo = opponent.Elo, MatchId = Guid.NewGuid().ToString()};
+        return opponent is null ? null : new MatchmakeResponse() {PlayerMatchedId = opponent.Id, PlayerMatchedElo = opponent.Elo, MatchId = Guid.NewGuid().ToString()};
+    }
+
+    private async ValueTask<bool> QueuePlayerIfNoOpponentFound(PlayerDto playerDto, PlayerDto? opponent)
+    {
+        if (opponent is not null)
+        {
+            return false;
+        }
+
+        return await _matchRepository.AddPlayerToQueue(playerDto);
     }
 }

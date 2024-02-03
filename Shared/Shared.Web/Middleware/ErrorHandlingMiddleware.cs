@@ -24,6 +24,12 @@ public class ErrorHandlingMiddleware : IMiddleware
         {
             await next(context);
         }
+        catch (OperationCanceledException) when (context.RequestAborted.IsCancellationRequested)
+        {
+            _logger.LogError("Request timed out.");
+            context.Response.StatusCode = (int) HttpStatusCode.RequestTimeout;
+            await context.Response.WriteAsJsonAsync(new { error = "Request timed out." }, context.RequestAborted);
+        }
         catch (ThorException exception)
         {
             _logger.LogError(exception, exception.Message);
@@ -36,17 +42,17 @@ public class ErrorHandlingMiddleware : IMiddleware
         }
     }
 
-    private async Task HandleErrorAsync(HttpContext context, System.Exception exception)
+    private Task HandleErrorAsync(HttpContext context, System.Exception exception)
     {
         var errorResponse = _exceptionCompositionRoot.Map(exception);
         context.Response.StatusCode = (int) (errorResponse?.StatusCode ?? HttpStatusCode.InternalServerError);
         var response = errorResponse?.Response;
         if (response is null)
         {
-            return;
+            return Task.CompletedTask;
         }
             
-        await context.Response.WriteAsJsonAsync(response);
+        return context.Response.WriteAsJsonAsync(response);
     }
 }
 

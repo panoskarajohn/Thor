@@ -1,6 +1,10 @@
 import http from 'k6/http';
 import { sleep } from 'k6';
 import { uuidv4 } from 'https://jslib.k6.io/k6-utils/1.4.0/index.js';
+import { Counter } from 'k6/metrics';
+
+// A counter for 404 responses
+let Counter404 = new Counter('http_404');
 
 export let options = {
     insecureSkipTLSVerify: true,
@@ -16,7 +20,7 @@ export let options = {
 }
 
 export default function () {
-    const url = 'http://localhost:5009/match';
+    const url = 'http://localhost:8000/match';
     const randomUUID = uuidv4();
 
     // generate random number between 500 and 2500
@@ -29,10 +33,15 @@ export default function () {
 
     const headers = { 'Content-Type': 'application/json' };
 
-    http.post(url, JSON.stringify(data),
+    const result = http.post(url, JSON.stringify(data),
     {
         headers: headers
     });
+
+    // If the response is 404, increment the counter
+    if (result.status === 404) {
+        Counter404.add(1);
+    }
 
     sleep(1);
 }

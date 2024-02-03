@@ -6,18 +6,18 @@ namespace Game.Application.Commands.Handlers;
 
 public class MatchMakeCleanCommandHandler : ICommandHandler<MatchMakeCleanCommand, bool>
 {
-    private readonly IMatchMaker _matchMaker;
+    private readonly IMatchRepository _matchRepository;
     private readonly ILogger<MatchMakeCleanCommandHandler> _logger;
 
-    public MatchMakeCleanCommandHandler(IMatchMaker matchMaker, ILogger<MatchMakeCleanCommandHandler> logger)
+    public MatchMakeCleanCommandHandler(IMatchRepository matchRepository, ILogger<MatchMakeCleanCommandHandler> logger)
     {
-        _matchMaker = matchMaker;
+        _matchRepository = matchRepository;
         _logger = logger;
     }
 
     public Task<bool> HandleAsync(MatchMakeCleanCommand command, CancellationToken cancellationToken = default)
     {
         _logger.LogWarning("Deleting all players from the queue");
-        return _matchMaker.CleanQueue();
+        return _matchRepository.CleanQueue();
     }
 }

@@ -29,6 +29,7 @@ namespace Shared.Web
             return services;
         }
         
+        
         public static IServiceCollection AddErrorHandling(this IServiceCollection services)
             => services
                 .AddScoped<ErrorHandlingMiddleware>()
